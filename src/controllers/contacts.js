@@ -36,7 +36,7 @@ export const addContactController = async (req, res) => {
 
 export const deleteContactController = async (req, res, next) => {
   const { id } = req.params;
-  const data = await contactsServices.deleteContact(id);
+  const data = await contactsServices.deleteContact({_id: id});
 
   if (!data) {
     next(createHttpError(404, `Contact with id=${id} not found`));
@@ -48,20 +48,20 @@ export const deleteContactController = async (req, res, next) => {
 
 export const upsertContactController = async (req, res) => {
   const { id } = req.params;
-  const {result} = await contactsServices.updateContact({ _id: id }, req.body, { upsert: true });
+  const {isNew, data} = await contactsServices.updateContact({_id: id}, req.body, { upsert: true });
 
-  const status = result.isNew ? 201 : 200;
+  const status = isNew ? 201 : 200;
 
   res.status(status).json({
     status,
     message: 'Successfuly upserted a contact',
-    data: result.data,
+    data,
   });
 };
 
 export const patchContactController = async (req, res, next) => {
   const { id } = req.params;
-  const { result } = await contactsServices.updateContact({ _id: id }, req.body);
+  const result = await contactsServices.updateContact({_id: id}, req.body);
   
   if (!result) {
     next(createHttpError(404, `Contact with id=${id} not found`));
