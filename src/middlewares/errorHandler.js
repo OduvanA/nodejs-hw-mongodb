@@ -1,9 +1,3 @@
-// const errorHandler = (err, req, res, next) => {
-//   const { status = 500, message } = err;
-//   res.status(status).json({
-//     message: err,
-//   });
-// };
 import { HttpError } from 'http-errors';
 
 const errorHandler = (err, req, res, next) => {
