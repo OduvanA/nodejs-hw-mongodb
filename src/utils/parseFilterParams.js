@@ -7,8 +7,7 @@ const parseType = type => {
 
 const parseBoolean = isFavorite => {  
   if (typeof isFavorite !== 'string') return;
-  if (isFavorite === 'true') return Boolean(1);
-  if (isFavorite === 'false') return Boolean(0);
+  if (isFavorite === 'true' || isFavorite === 'false') return isFavorite;
 };
 
 
