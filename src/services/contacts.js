@@ -15,10 +15,12 @@ export const getContacts = async ({
   if (filter.isFavorite) {
     contactsQuery.where('isFavourite').equals(filter.isFavorite);
   };
+
+ console.log(filter.type, filter.isFavorite);
  
-  const [contactsCount, contacts] = await Promise.all([
-    ContactsCollection.find().merge(contactsQuery).countDocuments(),
-    contactsQuery.skip(skip).limit(limit).sort({ [sortBy]: sortOrder }).exec()]);
+  const [contacts, contactsCount] = await Promise.all([
+    contactsQuery.skip(skip).limit(limit).sort({ [sortBy]: sortOrder }).exec(),
+    ContactsCollection.find().merge(contactsQuery).countDocuments()]);
   
   const paginationData = calculatePaginationData(contactsCount, perPage, page);
   return {
