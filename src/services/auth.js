@@ -3,14 +3,14 @@ import createHttpError from "http-errors";
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import SessionCollection from "../db/models/Session.js";
-import { FIFTEEN_MINUTES, ONE_DAY } from "../constants/index.js";
+import { FIFTEEN_MINUTES, THIRTY_DAYS } from "../constants/index.js";
 import UsersCollection from "../db/models/User.js";
 
 const createSession = () => {
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
   const accessTokenValidUntil = new Date(Date.now() + FIFTEEN_MINUTES);
-  const refreshTokenValidUntil = new Date(Date.now() + ONE_DAY);
+  const refreshTokenValidUntil = new Date(Date.now() + THIRTY_DAYS);
   return {
     accessToken,
     refreshToken,
@@ -25,7 +25,9 @@ export const signup = async (payload) => {
   if (user) throw createHttpError(409, 'Email in use');
 
   const encryptedPassword = await bcrypt.hash(password, 10);
-  return await UsersCollection.create({ ...payload, password: encryptedPassword, });
+  const data = await UsersCollection.create({ ...payload, password: encryptedPassword, });
+  delete data._doc.password;
+  return data._doc;
 };
 
 export const signin = async (payload) => {
@@ -65,8 +67,8 @@ export const refreshSession = async ({ sessionId, refreshToken }) => {
     throw createHttpError(401, 'Session token is expired');
   }
 
-  const newSession = createSession();
   await SessionCollection.deleteOne({ _id: sessionId });
+  const newSession = createSession();
 
   return await SessionCollection.create({
     userId: oldSession._id,

@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, SchemaType, SchemaTypes } from "mongoose";
 import { contactTypeList } from "../../constants/contacts.js";
 
 const contactSchema = new Schema(
@@ -21,6 +21,10 @@ const contactSchema = new Schema(
       required: true,
       enum: contactTypeList,
       default: 'personal',
+    },
+    userId: {
+      type: SchemaTypes.ObjectId,
+      ref: 'user',
     },
   },
   {

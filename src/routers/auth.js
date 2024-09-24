@@ -6,15 +6,15 @@ import * as authControllers from "../controllers/auth.js";
 
 const authRouter = Router();
 
-authRouter.post('/signup',
+authRouter.post('/register',
   validateBody(userSignupSchema),
   ctrlWrapper(authControllers.signupController));
 
-authRouter.post('/signin',
+authRouter.post('/login',
   validateBody(userSigninSchema),
   ctrlWrapper(authControllers.signinController));
 
-authRouter.post('/signout',
+authRouter.post('/logout',
   ctrlWrapper(authControllers.signoutController));
 
 authRouter.post('/refresh',
