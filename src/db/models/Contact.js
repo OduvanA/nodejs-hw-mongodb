@@ -1,4 +1,4 @@
-import { model, Schema, SchemaType, SchemaTypes } from "mongoose";
+import { model, Schema, SchemaTypes } from "mongoose";
 import { contactTypeList } from "../../constants/contacts.js";
 
 const contactSchema = new Schema(
