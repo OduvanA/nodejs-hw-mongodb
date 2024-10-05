@@ -28,14 +28,13 @@ parameters:
       type: string
       enum: ['asc', 'desc']
       example: 'asc'
-    description: 'All contact fields can be mentioned. Default value: _id'
   - in: query
     name: isFavourite
     schema:
       type: boolean
       example: false
   - in: query
-    name: contactType
+    name: type
     schema:
       type: string
       enum: ['work', 'home', 'personal']

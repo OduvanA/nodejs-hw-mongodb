@@ -21,7 +21,7 @@ export const setupServer = () => {
   }),);
   app.use(express.json());
   app.use(cookieParser());
-  app.use(express.static('/uploads'));
+  app.use(express.static('uploads'));
   app.use('/api-docs', swaggerDocs());
 
   app.use(router);

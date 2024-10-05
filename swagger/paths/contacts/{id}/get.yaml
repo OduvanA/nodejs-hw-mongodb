@@ -1,6 +1,6 @@
 tags:
   - Contacts
-summary: Get contacts by id
+summary: Get contacts
 operationId: getContact
 description: 'Get contact by id'
 security:
@@ -29,9 +29,11 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully found contact with id 66fc84a7d6d58588235d2be6!
+              example: Successfully found contact with id=66fc84a7d6d58588235d2be6!
             data:
               type: object
               $ref: '..\..\..\components\schemas\contact.yaml'
+  '404':
+    $ref: '..\..\..\components\responses\404.yaml'
   '401':
     $ref: '..\..\..\components\responses\401.yaml'

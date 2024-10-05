@@ -3,11 +3,8 @@ required:
   - _id
   - name
   - phoneNumber
-  - email
-  - isFavourite
   - contactType
   - userId
-  - photo
 properties:
   _id:
     description: 'Contact id'
@@ -20,7 +17,7 @@ properties:
   phoneNumber:
     description: 'Contact phone number'
     type: string
-    example: '123456789'
+    example: '+1000555222'
   email:
     description: 'Contact email'
     type: string
@@ -40,4 +37,4 @@ properties:
   photo:
     description: 'Link to contact photo'
     type: string
-    example: https://res.cloudinary.com/ddhfbjlvi/image/upload/v1727825063/photos/uintqb5e9dbnjulzmjwu.jpg
+    example: https://res.cloudinary.com/ddhfbjlvi/image/upload/image.jpg
