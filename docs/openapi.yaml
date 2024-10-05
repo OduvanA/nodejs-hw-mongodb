@@ -12,8 +12,7 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: http://localhost:3000
-#посилання на задеплоєний сайт
+  - url: https://contacts-app-hw7-c5ro.onrender.com
 paths:
   /contacts:
     get:
