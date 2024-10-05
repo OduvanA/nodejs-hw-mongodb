@@ -11,10 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
-      "url": null
+      "url": "https://contacts-app-hw7-c5ro.onrender.com"
     }
   ],
   "tags": [
@@ -77,8 +74,7 @@
                 "desc"
               ],
               "example": "asc"
-            },
-            "description": "All contact fields can be mentioned. Default value: _id"
+            }
           },
           {
             "in": "query",
@@ -90,7 +86,7 @@
           },
           {
             "in": "query",
-            "name": "contactType",
+            "name": "type",
             "schema": {
               "type": "string",
               "enum": [
@@ -197,11 +193,7 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "email",
-                  "isFavourite",
-                  "contactType",
-                  "userId",
-                  "photo"
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -212,7 +204,7 @@
                   "phoneNumber": {
                     "description": "Contact phone number",
                     "type": "string",
-                    "example": "123456789"
+                    "example": "+1000555222"
                   },
                   "email": {
                     "description": "Contact email",
@@ -289,7 +281,7 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Get contacts by id",
+        "summary": "Get contacts",
         "operationId": "getContact",
         "description": "Get contact by id",
         "security": [
@@ -327,7 +319,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found contact with id 66fc84a7d6d58588235d2be6!"
+                      "example": "Successfully found contact with id=66fc84a7d6d58588235d2be6!"
                     },
                     "data": {
                       "type": "object",
@@ -340,6 +332,155 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Delete a contact",
+        "operationId": "deleteContact",
+        "description": "Delete a contact by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66fc84a7d6d58588235d2be6"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Update a contacts",
+        "operationId": "updateContact",
+        "description": "Update a contact by id with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66fc84a7d6d58588235d2be6"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Contact name",
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "phoneNumber": {
+                    "description": "Contact phone number",
+                    "type": "string",
+                    "example": "+1000555222"
+                  },
+                  "email": {
+                    "description": "Contact email",
+                    "type": "string",
+                    "example": "john.doe@mail.com"
+                  },
+                  "isFavourite": {
+                    "description": "Whether the contact is favourite",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "contactType": {
+                    "description": "Contact type: work, home or personal",
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
+                  },
+                  "userId": {
+                    "description": "User id",
+                    "type": "string",
+                    "example": "66f82f51f334d8291ef790e7"
+                  },
+                  "photo": {
+                    "description": "Contact photo",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The contact was updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfuly updated a contact!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -359,11 +500,8 @@
           "_id",
           "name",
           "phoneNumber",
-          "email",
-          "isFavourite",
           "contactType",
-          "userId",
-          "photo"
+          "userId"
         ],
         "properties": {
           "_id": {
@@ -379,7 +517,7 @@
           "phoneNumber": {
             "description": "Contact phone number",
             "type": "string",
-            "example": "123456789"
+            "example": "+1000555222"
           },
           "email": {
             "description": "Contact email",
@@ -408,7 +546,7 @@
           "photo": {
             "description": "Link to contact photo",
             "type": "string",
-            "example": "https://res.cloudinary.com/ddhfbjlvi/image/upload/v1727825063/photos/uintqb5e9dbnjulzmjwu.jpg"
+            "example": "https://res.cloudinary.com/ddhfbjlvi/image/upload/image.jpg"
           }
         }
       }
@@ -443,6 +581,43 @@
                     "message": {
                       "type": "string",
                       "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "A contact with the specified ID was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contact with id=66fc84a7d6d58588235d2be6 not found"
                     }
                   }
                 }
